@@ -1,0 +1,87 @@
+package com.example1.wocao;
+
+import java.util.ArrayList;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity extends Activity{
+    
+    ListView listview = null;
+    TextView textv=null;
+    //String [] counters;
+    //public counter[] counter_obj;
+    //public ArrayAdapter<counter> newadp ;
+    public cutadapter cut_adapter;
+    public ArrayList<counter> alist_counter ;
+     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        //counter[] cun_ar=new counter[100];
+        /*for (int a =0;a<100;a++)
+        {
+        	cun_ar[a].counterid=a;
+        }*/
+        alist_counter = new ArrayList<counter>();
+        counter counter1= new counter("haha");
+        alist_counter.add(counter1);
+        Toast.makeText(this, "Welcome!",Toast.LENGTH_LONG).show();
+        
+        cut_adapter= new cutadapter(MainActivity.this,R.id.list1,alist_counter);
+        ListView listview = (ListView)findViewById(R.id.list1);
+        TextView textv= (TextView)findViewById(R.id.wocao);
+        
+        listview.setAdapter(cut_adapter);
+        
+    
+        
+    }
+    
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        
+        
+        return true;
+    }
+    
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+        case R.id.item1:
+            
+            //cut_adapter.notifyDataSetChanged();
+            return true;
+        case R.id.item2:
+            
+            
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+    }
+
+
+	}
+
+
+
+	
+    
+    
+    
+    
+    
+    
+}

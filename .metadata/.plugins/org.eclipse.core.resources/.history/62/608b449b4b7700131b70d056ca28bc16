@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    
+    <item android:id="@+id/item1"
+          android:title="NEW COUNTER"
+          android:visible="true"></item>
+    
+    <item android:id="@+id/item2"
+        android:title="EDIT"></item>
+
+</menu>

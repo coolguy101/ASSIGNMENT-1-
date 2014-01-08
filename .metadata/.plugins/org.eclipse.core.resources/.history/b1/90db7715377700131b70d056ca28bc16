@@ -1,0 +1,12 @@
+package com.example1.wocao;
+
+public class counter {
+	int count = 0;
+	String name="";
+	public counter (String name)
+	{
+		this.name=name;
+	}
+	
+
+}
