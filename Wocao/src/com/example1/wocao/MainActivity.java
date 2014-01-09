@@ -3,13 +3,13 @@ package com.example1.wocao;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnDragListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -26,6 +26,8 @@ public class MainActivity extends Activity{
     //public ArrayAdapter<counter> newadp ;
     public cutadapter cut_adapter;
     public ArrayList<counter> alist_counter ;
+    public databasehelp mydbhelper2 ;
+    public SQLiteDatabase thedb;
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +35,17 @@ public class MainActivity extends Activity{
         
         alist_counter = new ArrayList<counter>();
         counter counter1= new counter("Example Counter",the_counter_id);
-        
-        
+        the_counter_id++;
+        // create new database
+        mydbhelper2 =  new databasehelp(getBaseContext());
+        thedb = mydbhelper2.getWritableDatabase();
+        ContentValues values = new ContentValues(); 
         alist_counter.add(counter1);
-        
+        values.put("ID", 0);
+        values.put("NAME", counter1.name1);
+        values.put("COUNT", counter1.count);
+        long newrowid;
+        newrowid = thedb.insert("TABLE1",null, values);
         Toast.makeText(this, "Welcome!",Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "LongPress to delete Counter",Toast.LENGTH_LONG).show();
         ListView listview = (ListView)findViewById(R.id.list1);
@@ -64,6 +73,7 @@ public class MainActivity extends Activity{
 					int arg2, long arg3) {
 				alist_counter.remove(arg2);
 				cut_adapter.notifyDataSetChanged();
+				Toast.makeText(MainActivity.this, "counter deleted!", Toast.LENGTH_SHORT).show();
 				return false;
 			}
 		});
@@ -84,7 +94,8 @@ public class MainActivity extends Activity{
     }
     
     public counter creat_counter(String name)
-    {   counter new_count = new counter(name,the_counter_id+1);
+    {   counter new_count = new counter(name,the_counter_id);
+        the_counter_id++;
     	return new_count;
     }
 
@@ -97,8 +108,8 @@ public class MainActivity extends Activity{
             cut_adapter.notifyDataSetChanged();
             return true;
         case R.id.item2:
-            /*alist_counter.clear();
-            cut_adapter.notifyDataSetChanged();*/
+            alist_counter.clear();
+            cut_adapter.notifyDataSetChanged();
             return true;
         default:
             return super.onOptionsItemSelected(item);

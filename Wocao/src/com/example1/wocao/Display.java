@@ -2,6 +2,7 @@ package com.example1.wocao;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -14,6 +15,7 @@ public class Display extends Activity {
     private TextView c_display=null;
     private Button button = null;
     counter theobj;
+    databasehelp mydbhelper = new databasehelp(getBaseContext());
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,8 +25,10 @@ public class Display extends Activity {
 		button = (Button) findViewById(R.id.button1);
 		Intent intent = getIntent();
 		theobj = (counter) intent.getSerializableExtra("object");
+		 SQLiteDatabase dis_db = mydbhelper.getReadableDatabase();
+		 
 		c_display= (TextView) findViewById(R.id.dis_id);
-		c_display.setText(theobj.count+"");
+		c_display.setText(theobj.counterid+"");
 	}
 
 	/**
