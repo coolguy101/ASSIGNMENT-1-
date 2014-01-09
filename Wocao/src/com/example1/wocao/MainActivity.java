@@ -97,8 +97,8 @@ public class MainActivity extends Activity{
             cut_adapter.notifyDataSetChanged();
             return true;
         case R.id.item2:
-            alist_counter.clear();
-            cut_adapter.notifyDataSetChanged();
+            /*alist_counter.clear();
+            cut_adapter.notifyDataSetChanged();*/
             return true;
         default:
             return super.onOptionsItemSelected(item);
