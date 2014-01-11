@@ -30,6 +30,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="android.app.LauncherActivity" />
         </activity>
+        <activity
+            android:name="com.example1.wocao.Rename_act"
+            android:label="@string/title_activity_rename_act"
+            android:parentActivityName="com.example1.wocao.Display"
+             >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example1.wocao.Display" />
+        </activity>
     </application>
 
 </manifest>

@@ -59,12 +59,21 @@ public class Display extends Activity {
 		getMenuInflater().inflate(R.menu.display, menu);
 		return true;
 	}
+	//to reset the counter when "reset" is clicked,and also update the database
+	public void reset(View view)
+	{
+		theobj.count=0;
+		ContentValues values = new ContentValues();
+		values.put("COUNT", 0);
+		dis_db.update("table1", values, "ID = "+theobj.counterid,null);
+		c_display.setText(theobj.count+"");
+	}
 	// when add button is clicked it will add one to the counter and update the data base
     public void add(View view)
     {
     	theobj.count++;
     	//c_display.setText(theobj.count+"");
-    	System.out.println(theobj.count);
+    	
     	ContentValues values = new ContentValues();
     	values.put("COUNT", theobj.count);
     	dis_db.update("table1",values, "ID ="+theobj.counterid, null);
@@ -75,6 +84,13 @@ public class Display extends Activity {
     	c_display.setText(c.getInt(0)+c.getString(1)+c.getString(2)+"wocao");
     	
     }
+    //rename the counter, and update the database as well
+    public void rename(View view)
+    {
+    	Intent intent = new Intent(Display.this,Rename_act.class);
+    	startActivityForResult(intent, 2);
+    }
+    
     //on back button clicked, send counter object back to MainActivity
 	@Override
 	public void onBackPressed() {
@@ -85,6 +101,20 @@ public class Display extends Activity {
 		setResult(RESULT_OK, intent);
 		Toast.makeText(Display.this, "this is print1", Toast.LENGTH_LONG).show();
 		super.onBackPressed();
+	}
+    
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode ==2 )
+		{
+			theobj.name1=data.getStringExtra("newname");
+			ContentValues values = new ContentValues();
+			values.put("NAME", theobj.name1);
+			dis_db.update("table1", values, "ID ="+ theobj.counterid,null);
+			
+		}
 	}
 
 	@Override
