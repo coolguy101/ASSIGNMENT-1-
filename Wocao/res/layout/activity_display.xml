@@ -45,7 +45,8 @@
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
         android:layout_alignLeft="@+id/button1"
-        android:text="RESET" />
+        android:text="RESET" 
+        android:onClick="reset"/>
 
     <TextView
         android:id="@+id/textView1"

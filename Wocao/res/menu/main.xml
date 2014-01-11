@@ -6,7 +6,8 @@
           android:showAsAction="always"></item>
     
     <item android:id="@+id/item2"
-        android:title="EDIT"
+        android:title="SORT"
         android:showAsAction="always"></item>
+    
 
 </menu>

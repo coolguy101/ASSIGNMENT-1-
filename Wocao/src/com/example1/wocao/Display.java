@@ -1,7 +1,9 @@
 package com.example1.wocao;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -10,12 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Display extends Activity {
     private TextView c_display=null;
     private Button button = null;
     counter theobj;
-    databasehelp mydbhelper = new databasehelp(getBaseContext());
+    databasehelp mydbhelper=null;
+    SQLiteDatabase dis_db=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,10 +29,19 @@ public class Display extends Activity {
 		button = (Button) findViewById(R.id.button1);
 		Intent intent = getIntent();
 		theobj = (counter) intent.getSerializableExtra("object");
-		 SQLiteDatabase dis_db = mydbhelper.getReadableDatabase();
+		mydbhelper= new databasehelp(Display.this);
+		dis_db = mydbhelper.getReadableDatabase();
 		 
 		c_display= (TextView) findViewById(R.id.dis_id);
 		c_display.setText(theobj.counterid+"");
+		String [] col = {"ID","NAME","COUNT"};
+		Cursor c = dis_db.query("table1",col,"ID = "+theobj.counterid,null,null,null,null);
+		c.moveToFirst();
+		int wocao = c.getInt(0);
+		String wocao2 = c.getString(1);
+		int wocao3 = c.getInt(2);
+		c_display.setText(wocao+wocao2+wocao3);
+		theobj.count=wocao3;
 	}
 
 	/**
@@ -46,11 +59,34 @@ public class Display extends Activity {
 		getMenuInflater().inflate(R.menu.display, menu);
 		return true;
 	}
+	// when add button is clicked it will add one to the counter and update the data base
     public void add(View view)
     {
-    	theobj.count=theobj.count+1;
-    	c_display.setText(theobj.count+"");
+    	theobj.count++;
+    	//c_display.setText(theobj.count+"");
+    	System.out.println(theobj.count);
+    	ContentValues values = new ContentValues();
+    	values.put("COUNT", theobj.count);
+    	dis_db.update("table1",values, "ID ="+theobj.counterid, null);
+    	String [] wocao = {"ID","NAME","COUNT"};
+    	
+    	Cursor c  = dis_db.query("table1",wocao, "ID = "+theobj.counterid, null, null, null, null);
+    	c.moveToFirst();
+    	c_display.setText(c.getInt(0)+c.getString(1)+c.getString(2)+"wocao");
+    	
     }
+    //on back button clicked, send counter object back to MainActivity
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+
+		Intent intent = new Intent();
+		intent.putExtra("getdata", theobj);
+		setResult(RESULT_OK, intent);
+		Toast.makeText(Display.this, "this is print1", Toast.LENGTH_LONG).show();
+		super.onBackPressed();
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

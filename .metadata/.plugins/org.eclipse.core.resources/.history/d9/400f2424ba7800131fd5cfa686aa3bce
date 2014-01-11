@@ -1,0 +1,11 @@
+package com.example1.wocao;
+
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class db extends SQLiteOpenHelper{
+	public db(Context context)
+	{
+		super(context,"cundb",null,1);
+	}
+
+}

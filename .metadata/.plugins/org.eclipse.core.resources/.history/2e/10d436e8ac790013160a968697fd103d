@@ -1,0 +1,21 @@
+package com.example1.wocao;
+
+import java.util.Comparator;
+
+public class countercmp implements Comparator<counter>{
+
+	@Override
+	public int compare(counter lhs, counter rhs) {
+		// TODO Auto-generated method stub
+		if (lhs.count>rhs.count)
+		{
+			return 1;
+		}
+		else if (lhs.count<rhs.count)
+		{
+			return -1;
+		}
+		return rhs.count-lhs.count;
+	}
+
+}

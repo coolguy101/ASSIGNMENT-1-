@@ -14,7 +14,7 @@ public class databasehelp extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
 		
-		db.execSQL("CREATE TABLE TABLE1(ID INT PRIMARY KEY NOT NULL,NAME TEXT NOT NULL,COUNT INT NOT NULL)");
+		db.execSQL("create table table1(ID int,NAME text,COUNT int)");
 		
 	}
 	@Override

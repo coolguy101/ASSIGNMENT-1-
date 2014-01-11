@@ -1,8 +1,9 @@
 package com.example1.wocao;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
-public class counter implements Serializable{
+public class counter implements Serializable,Comparator<counter>{
 	int counterid=0;
 	int count = 0;
 	String name1="";
@@ -31,6 +32,12 @@ public class counter implements Serializable{
 		// TODO Auto-generated method stub
 		
 		return this.name1;
+	}
+	@Override
+	public int compare(counter lhs, counter rhs) {
+		// TODO Auto-generated method stub
+		
+		return lhs.count-rhs.count;
 	}
 	
 	

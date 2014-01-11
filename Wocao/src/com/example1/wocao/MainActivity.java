@@ -1,6 +1,8 @@
 package com.example1.wocao;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -32,20 +34,22 @@ public class MainActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+        System.out.print("asdfaksdf");
         alist_counter = new ArrayList<counter>();
         counter counter1= new counter("Example Counter",the_counter_id);
-        the_counter_id++;
+        
         // create new database
-        mydbhelper2 =  new databasehelp(getBaseContext());
+        mydbhelper2 =  new databasehelp(MainActivity.this);
         thedb = mydbhelper2.getWritableDatabase();
         ContentValues values = new ContentValues(); 
         alist_counter.add(counter1);
         values.put("ID", 0);
         values.put("NAME", counter1.name1);
         values.put("COUNT", counter1.count);
-        long newrowid;
-        newrowid = thedb.insert("TABLE1",null, values);
+        thedb.insert("table1",null, values);
+        the_counter_id++;
+//        counter cmp1 = new counter ("cmp1",99);
+  //      counter cmp2 = new counter ("cmp2",98);
         Toast.makeText(this, "Welcome!",Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "LongPress to delete Counter",Toast.LENGTH_LONG).show();
         ListView listview = (ListView)findViewById(R.id.list1);
@@ -59,13 +63,11 @@ public class MainActivity extends Activity{
 					long arg3) {
 				// TODO Auto-generated method
 				Intent intent = new Intent(MainActivity.this,Display.class);
-				
 				intent.putExtra("object", alist_counter.get(arg2));
-				startActivity(intent);
-				
-			}
+				startActivityForResult(intent,1);
+				}
 		});
-        //
+        //long click to delete
         listview.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
@@ -95,6 +97,11 @@ public class MainActivity extends Activity{
     
     public counter creat_counter(String name)
     {   counter new_count = new counter(name,the_counter_id);
+        ContentValues values = new ContentValues();
+        values.put("ID", new_count.counterid);
+        values.put("NAME", new_count.name1);
+        values.put("COUNT", new_count.count);
+        thedb.insert("table1",null,values);
         the_counter_id++;
     	return new_count;
     }
@@ -108,15 +115,53 @@ public class MainActivity extends Activity{
             cut_adapter.notifyDataSetChanged();
             return true;
         case R.id.item2:
-            alist_counter.clear();
+            //alist_counter.clear();
+            
+            Collections.sort(alist_counter,new countercmp());
             cut_adapter.notifyDataSetChanged();
             return true;
         default:
             return super.onOptionsItemSelected(item);
     }
+		
 
 
 	}
+
+    
+	/*@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		System.out.print("wocao");
+		super.onStart();
+		Toast.makeText(MainActivity.this, "this is print", Toast.LENGTH_LONG).show();
+		Intent intent= getIntent();
+		counter c1 = (counter) intent.getSerializableExtra("getdata");
+		alist_counter.remove(c1.counterid);
+		alist_counter.add(c1.counterid, c1);
+		cut_adapter.notifyDataSetChanged();
+		
+	}*/
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		Toast.makeText(MainActivity.this, "this is print in onResult", Toast.LENGTH_LONG).show();
+		
+		counter wocao = (counter) data.getSerializableExtra("getdata");
+		
+		Toast.makeText(MainActivity.this, "this is print in onResult2", Toast.LENGTH_LONG).show();
+		for (counter c1 : alist_counter)
+		{
+			if(c1.counterid == wocao.counterid)
+			{
+				c1.count=wocao.count;
+				c1.name1=wocao.name1;
+				break;
+			}
+		}
+		cut_adapter.notifyDataSetChanged();
+		}
 
 
 

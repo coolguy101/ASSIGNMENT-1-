@@ -18,8 +18,16 @@
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.widget.AdapterView.OnItemLongClickListener"/>
 <fullyQualifiedTypeName name="android.view.View.OnDragListener"/>
-<fullyQualifiedTypeName name="com.example1.wocao.MainActivity"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="com.example1.wocao.R.id"/>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
+<fullyQualifiedTypeName name="android.database.sqlite.SQLiteOpenHelper"/>
+<fullyQualifiedTypeName name="android.database.sqlite.SQLiteDatabase"/>
+<fullyQualifiedTypeName name="java.util.Comparator"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="com.example1.wocao.countercmp"/>
+<fullyQualifiedTypeName name="com.example1.wocao.counter"/>
+<fullyQualifiedTypeName name="com.example1.wocao.MainActivity"/>
+<fullyQualifiedTypeName name="com.example1.wocao.Display"/>
 </qualifiedTypeNameHistroy>
