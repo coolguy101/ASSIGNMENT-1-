@@ -20,7 +20,9 @@ public class Rename_act extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		edittext = (EditText) findViewById(R.id.editText1);
-		
+		final Dialog dialog = new Dialog(Rename_act.this);
+        // Include dialog.xml file
+        dialog.setContentView(R.layout.activity_rename_act);
 		
 	}
      
@@ -41,18 +43,6 @@ public class Rename_act extends Activity {
        finish();
     	
     }
-    
-	@Override
-	public void onBackPressed() {
-		// TODO Auto-generated method stub
-		String rename =edittext.getText().toString();
-	       Intent intent = new Intent();
-	       intent.putExtra("newname",rename );
-	       setResult(RESULT_OK, intent);
-	       
-		super.onBackPressed();
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
