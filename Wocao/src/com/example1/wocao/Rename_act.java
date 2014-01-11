@@ -41,7 +41,7 @@ public class Rename_act extends Activity {
        finish();
     	
     }
-    
+    // when back button is pressed do the same thing
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
