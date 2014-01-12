@@ -50,7 +50,6 @@ public class MainActivity extends Activity{
         the_counter_id++;
 //        counter cmp1 = new counter ("cmp1",99);
   //      counter cmp2 = new counter ("cmp2",98);
-        Toast.makeText(this, "Welcome!",Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "LongPress to delete Counter",Toast.LENGTH_LONG).show();
         ListView listview = (ListView)findViewById(R.id.list1);
         cut_adapter= new cutadapter(MainActivity.this,R.id.list1,alist_counter);
@@ -73,6 +72,8 @@ public class MainActivity extends Activity{
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
+				int id  = alist_counter.get(arg2).counterid;
+				thedb.delete("table1", "ID ="+id,null);
 				alist_counter.remove(arg2);
 				cut_adapter.notifyDataSetChanged();
 				Toast.makeText(MainActivity.this, "counter deleted!", Toast.LENGTH_SHORT).show();
