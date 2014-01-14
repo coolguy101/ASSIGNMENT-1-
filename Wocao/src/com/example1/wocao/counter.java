@@ -7,6 +7,16 @@ public class counter implements Serializable,Comparator<counter>{
 	int counterid=0;
 	int count = 0;
 	String name1="";
+	public counter()
+	{
+		
+	}
+	public counter(String name,int theid,int count)
+	{
+		this.name1=name;
+		this.counterid=theid;
+		this.count=count;
+	}
 	public counter (String name,int theid)
 	{
 		this.name1=name;

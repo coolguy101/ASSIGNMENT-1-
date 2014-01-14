@@ -1,14 +1,15 @@
 package com.example1.wocao;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,28 +34,67 @@ public class MainActivity extends Activity{
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_main);
-        System.out.print("asdfaksdf");
+        //create new list
         alist_counter = new ArrayList<counter>();
         counter counter1= new counter("Example Counter",the_counter_id);
         
         // create new database
         mydbhelper2 =  new databasehelp(MainActivity.this);
         thedb = mydbhelper2.getWritableDatabase();
+        //add a value to database example counter
         ContentValues values = new ContentValues(); 
-        alist_counter.add(counter1);
+        //alist_counter.add(counter1);
         values.put("ID", 0);
         values.put("NAME", counter1.name1);
         values.put("COUNT", counter1.count);
-        thedb.insert("table1",null, values);
-        the_counter_id++;
+        //thedb.delete("table1",null, null);
+        Log.i("wocao", "run1");
+        Cursor c1 = thedb.query("table1",null,null, null, null, null,null);
+        Toast.makeText(this,"heelo ",Toast.LENGTH_LONG).show();
+        if (c1.moveToFirst())
+        {   Toast.makeText(this,"wocao",Toast.LENGTH_LONG).show();
+        	alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
+        	the_counter_id=c1.getInt(0);
+        	while(c1.moveToNext())
+        	{
+        		alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
+        		if (c1.getInt(0)>the_counter_id)
+        		{
+        			the_counter_id=c1.getInt(0);
+        		}
+        	}
+        	the_counter_id++;
+        }
+       /* while (c1.moveToFirst())
+        {   
+        	if (c1.getString(c1.getColumnIndex("NAME"))==null)
+        	{  Toast.makeText(this,"the DB is not empty888",Toast.LENGTH_LONG).show();
+        	   break;
+        	   
+            }*/
+        	//Toast.makeText(this,"the DB is not empty",Toast.LENGTH_LONG).show();
+        	/*c1.moveToFirst();
+        	//alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
+        	
+        	while(c1.moveToNext())
+        	{
+        		//alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
+        		the_counter_id= c1.getInt(0)+1;
+        		Toast.makeText(this,"asdfasdf",Toast.LENGTH_LONG).show();
+        	}*/
+        
+        Log.i("wocao", "run2");
+        //thedb.insert("table1",null, values);
+        //the_counter_id++;
 //        counter cmp1 = new counter ("cmp1",99);
   //      counter cmp2 = new counter ("cmp2",98);
         Toast.makeText(this, "LongPress to delete Counter",Toast.LENGTH_LONG).show();
-        ListView listview = (ListView)findViewById(R.id.list1);
+        listview = (ListView)findViewById(R.id.list1);
         cut_adapter= new cutadapter(MainActivity.this,R.id.list1,alist_counter);
         
-        TextView textv= (TextView)findViewById(R.id.wocao);
+         textv= (TextView)findViewById(R.id.wocao);
         listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -106,7 +146,7 @@ public class MainActivity extends Activity{
         the_counter_id++;
     	return new_count;
     }
-
+    
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
