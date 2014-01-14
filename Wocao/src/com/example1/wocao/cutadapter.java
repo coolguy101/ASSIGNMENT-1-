@@ -34,7 +34,7 @@ public class cutadapter extends ArrayAdapter<counter>{
             v = vi.inflate(R.layout.listlayout, null);
             holder = new ViewHolder();
             holder.item1 = (TextView) v.findViewById(R.id.big);
-            
+            holder.item2 = (TextView) v.findViewById(R.id.small);
             v.setTag(holder);
         }
         else
@@ -43,7 +43,7 @@ public class cutadapter extends ArrayAdapter<counter>{
         final counter custom = entries.get(position);
         if (custom != null) {
             holder.item1.setText(custom.name1);
-            
+            holder.item2.setText(custom.count+"");
         }
         return v;
     }

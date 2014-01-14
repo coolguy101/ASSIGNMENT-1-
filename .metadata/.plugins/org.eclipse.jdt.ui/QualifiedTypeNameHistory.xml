@@ -30,4 +30,5 @@
 <fullyQualifiedTypeName name="com.example1.wocao.counter"/>
 <fullyQualifiedTypeName name="com.example1.wocao.MainActivity"/>
 <fullyQualifiedTypeName name="com.example1.wocao.Display"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
 </qualifiedTypeNameHistroy>

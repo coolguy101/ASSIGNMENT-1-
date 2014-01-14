@@ -4,10 +4,21 @@
     android:layout_height="fill_parent">
  
     <LinearLayout android:layout_width="fill_parent"
-        android:layout_height="wrap_content" android:orientation="vertical">
+        android:layout_height="wrap_content" android:orientation="horizontal">
         <TextView android:textSize="40dip" android:id="@+id/big"
-            android:layout_width="fill_parent" android:layout_height="wrap_content">
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip">
         </TextView>
+        
+        <TextView
+            android:id="@+id/small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dip"
+            android:layout_marginLeft="20dip" 
+            />
+        
+        
         
     </LinearLayout>
  
