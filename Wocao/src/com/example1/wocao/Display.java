@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 public class Display extends Activity {
     private TextView c_display=null;
+    private TextView stats1=null;
+    private TextView stats2=null;
+    private TextView stats3=null;
     private Button button = null;
     counter theobj;
     databasehelp mydbhelper=null;
@@ -31,7 +34,12 @@ public class Display extends Activity {
 		theobj = (counter) intent.getSerializableExtra("object");
 		mydbhelper= new databasehelp(Display.this);
 		dis_db = mydbhelper.getReadableDatabase();
-		 
+		stats1 = (TextView) findViewById(R.id.textView1);
+		stats2 = (TextView) findViewById(R.id.textView2);
+		stats3 = (TextView) findViewById(R.id.textView3);
+		stats1.setText("123");
+		stats2.setText("123");
+		stats3.setText("123");
 		c_display= (TextView) findViewById(R.id.dis_id);
 		c_display.setText(theobj.counterid+"");
 		String [] col = {"ID","NAME","COUNT"};
