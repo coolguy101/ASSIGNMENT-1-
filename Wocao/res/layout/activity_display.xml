@@ -9,7 +9,12 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Display" >
-
+    <TextView 
+        android:id="@+id/thename1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="21dp"
+        android:text=""/>
     <TextView
         android:id="@+id/dis_id"
         android:layout_width="match_parent"

@@ -19,7 +19,6 @@
 <fullyQualifiedTypeName name="android.widget.AdapterView.OnItemLongClickListener"/>
 <fullyQualifiedTypeName name="android.view.View.OnDragListener"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
-<fullyQualifiedTypeName name="com.example1.wocao.R.id"/>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
 <fullyQualifiedTypeName name="android.database.sqlite.SQLiteOpenHelper"/>
 <fullyQualifiedTypeName name="android.database.sqlite.SQLiteDatabase"/>
@@ -31,4 +30,9 @@
 <fullyQualifiedTypeName name="com.example1.wocao.MainActivity"/>
 <fullyQualifiedTypeName name="com.example1.wocao.Display"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="com.example1.wocao.R.id"/>
+<fullyQualifiedTypeName name="org.joda.time.DateTime"/>
+<fullyQualifiedTypeName name="android.app.backup.SharedPreferencesBackupHelper"/>
+<fullyQualifiedTypeName name="android.content.SharedPreferences"/>
+<fullyQualifiedTypeName name="android.app.Activity"/>
 </qualifiedTypeNameHistroy>

@@ -7,7 +7,8 @@
     
     <item android:id="@+id/item2"
         android:title="SORT"
-        android:showAsAction="always"></item>
+        android:showAsAction="always"
+        ></item>
     
 
 </menu>

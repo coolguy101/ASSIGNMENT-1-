@@ -29,7 +29,7 @@ public class Rename_act extends Activity {
 	 */
 	private void setupActionBar() {
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(false);
 
 	}
     public void rename_done(View view)

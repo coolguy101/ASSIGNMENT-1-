@@ -3,10 +3,16 @@ package com.example1.wocao;
 import java.io.Serializable;
 import java.util.Comparator;
 
-public class counter implements Serializable,Comparator<counter>{
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+public class counter extends Activity implements Serializable, Comparator<counter>{
+	
 	int counterid=0;
 	int count = 0;
 	String name1="";
+	Context context  = getBaseContext();
 	
 	public counter()
 	{
@@ -17,6 +23,7 @@ public class counter implements Serializable,Comparator<counter>{
 		this.name1=name;
 		this.counterid=theid;
 		this.count=count;
+		
 	}
 	public counter (String name,int theid)
 	{
