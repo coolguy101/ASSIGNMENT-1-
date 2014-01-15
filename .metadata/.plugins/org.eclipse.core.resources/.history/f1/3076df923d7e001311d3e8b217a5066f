@@ -54,12 +54,12 @@ public class MainActivity extends Activity{
         values.put("ID", 0);
         values.put("NAME", counter1.name1);
         values.put("COUNT", counter1.count);
-        //thedb.delete("table1",null, null);
+        thedb.delete("table1",null, null);
         
         Cursor c1 = thedb.query("table1",null,null, null, null, null,null);
         
         if (c1.moveToFirst())
-        {   
+        {   Toast.makeText(this,"wocao",Toast.LENGTH_LONG).show();
         	alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
         	the_counter_id=c1.getInt(0);
         	while(c1.moveToNext())
