@@ -1,5 +1,7 @@
 package com.example1.wocao;
 
+import java.util.Date;
+
 import org.joda.time.DateTime;
 
 import android.app.Activity;
@@ -27,12 +29,11 @@ public class Display extends Activity {
     private Button button = null;
     counter theobj;
     databasehelp mydbhelper=null;
+    
     SQLiteDatabase dis_db=null;
     DateTime counter_date = null;
     Context cou_context= null;
-    SharedPreferences shareddata =null;
-    SharedPreferences.Editor editor = null;
-    SharedPreferences getsharedata = null;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,7 +44,9 @@ public class Display extends Activity {
 		Intent intent = getIntent();
 		theobj = (counter) intent.getSerializableExtra("object");
 		mydbhelper= new databasehelp(Display.this);
+		
 		dis_db = mydbhelper.getReadableDatabase();
+		
 		c_name = (TextView) findViewById(R.id.thename1);
 		stats1 = (TextView) findViewById(R.id.textView1);
 		stats2 = (TextView) findViewById(R.id.textView2);
@@ -51,12 +54,12 @@ public class Display extends Activity {
 		//start new date
 		counter_date= new DateTime();
 	    cou_context = getApplicationContext();
-	    // create sharedpref for saving date data
-		shareddata=cou_context.getSharedPreferences("meidang", MODE_PRIVATE);
-		editor=shareddata.edit();
-		getsharedata = getBaseContext().getSharedPreferences("meidang",0);
-		String time = getsharedata.getString("date", "no time");
-		stats1.setText(time);
+	    // add new date
+		
+		
+		
+		
+		stats1.setText("asdklf");
 		stats2.setText(counter_date.getMinuteOfDay()+"");
 		stats3.setText("123");
 		c_display= (TextView) findViewById(R.id.dis_id);
@@ -96,20 +99,36 @@ public class Display extends Activity {
 		dis_db.update("table1", values, "ID = "+theobj.counterid,null);
 		c_display.setText(theobj.count+"");
 	}
+	// to display stats
+	public void stats(View view)
+	{   String [] date1={"COUNT","DATE2"}; 
+		Cursor the_cursor = dis_db.query("tabl1",date1 ,"ID = "+theobj.counterid,null, null, null, null);
+		the_cursor.moveToFirst();
+		while(the_cursor.moveToNext())
+		{
+			
+		}
+	} 
 	// when add button is clicked it will add one to the counter and update the data base
     public void add(View view)
-    {
+    {   
     	theobj.count++;
     	//c_display.setText(theobj.count+"");
-    	editor.putString("date", counter_date.getMinuteOfDay()+"");
-    	editor.commit();
     	ContentValues values = new ContentValues();
     	values.put("COUNT", theobj.count);
+    	values.put("DATE2",counter_date+"");
+    	values.put("ID", theobj.counterid);
+    	values.put("NAME", theobj.name1);
     	dis_db.update("table1",values, "ID ="+theobj.counterid, null);
-    	String [] wocao = {"ID","NAME","COUNT"};
+    	dis_db.insert("table1",null, values);
+    	String [] wocao = {"ID","NAME","COUNT","DATE2"};
      	Cursor c  = dis_db.query("table1",wocao, "ID = "+theobj.counterid, null, null, null, null);
     	c.moveToFirst();
     	c_display.setText(c.getInt(0)+c.getString(1)+c.getString(2)+"wocao");
+    	stats3.setText(c.getString(3));
+    	
+    	//DateTime time = new DateTime();
+    	//stats3.setText(c.getString(3).toString());
     }
     //rename the counter, and update the database as well
     public void rename(View view)

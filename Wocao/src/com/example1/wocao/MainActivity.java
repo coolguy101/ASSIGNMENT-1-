@@ -57,14 +57,19 @@ public class MainActivity extends Activity{
         //thedb.delete("table1",null, null);
         
         Cursor c1 = thedb.query("table1",null,null, null, null, null,null);
-        
+        int theid = 0;
         if (c1.moveToFirst())
         {   
         	alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
         	the_counter_id=c1.getInt(0);
+        	theid = c1.getInt(0);
         	while(c1.moveToNext())
-        	{
+        	{   if (c1.getInt(0)==theid)
+        	    {     
+        		      continue;
+        	    }
         		alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
+        		theid=c1.getInt(0);
         		if (c1.getInt(0)>the_counter_id)
         		{
         			the_counter_id=c1.getInt(0);
