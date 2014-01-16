@@ -7,16 +7,15 @@
     <uses-sdk
         android:minSdkVersion="15"
         android:targetSdkVersion="18" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
-        
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <activity
             android:name="com.example1.wocao.MainActivity"
             android:label="@string/app_name" >
@@ -37,8 +36,15 @@
         <activity
             android:name="com.example1.wocao.Rename_act"
             android:label="@string/title_activity_rename_act"
-            android:parentActivityName="com.example1.wocao.Display"
-             >
+            android:parentActivityName="com.example1.wocao.Display" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example1.wocao.Display" />
+        </activity>
+        <activity
+            android:name="com.example1.wocao.DataView"
+            android:label="@string/title_activity_data_view"
+            android:parentActivityName="com.example1.wocao.Display" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example1.wocao.Display" />

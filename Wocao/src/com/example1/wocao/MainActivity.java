@@ -55,21 +55,36 @@ public class MainActivity extends Activity{
         values.put("NAME", counter1.name1);
         values.put("COUNT", counter1.count);
         //thedb.delete("table1",null, null);
-        
+        int flag=5;
         Cursor c1 = thedb.query("table1",null,null, null, null, null,null);
-        int theid = 0;
+        ArrayList<Integer> the_id_list = new ArrayList<Integer>();
         if (c1.moveToFirst())
         {   
         	alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
         	the_counter_id=c1.getInt(0);
-        	theid = c1.getInt(0);
+        	the_id_list.add(c1.getInt(0));
         	while(c1.moveToNext())
-        	{   if (c1.getInt(0)==theid)
-        	    {     
-        		      continue;
+        	{   flag=5;
+        		for (int theid:the_id_list)
+        	    {
+        		    if (c1.getInt(0)==theid)
+        		    {
+        		         flag=1;
+        		         break;
+        		    }
+        		    
         	    }
-        		alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
-        		theid=c1.getInt(0);
+        	    if (flag==1)
+        	    {
+        	    	continue;
+        	    }
+        	    if (flag==5)
+        	    {
+        	    	the_id_list.add(c1.getInt(0));
+        	    	alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
+        	    }
+        		//alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
+        		//theid=c1.getInt(0);
         		if (c1.getInt(0)>the_counter_id)
         		{
         			the_counter_id=c1.getInt(0);

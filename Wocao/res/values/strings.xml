@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_display">Display</string>
     <string name="title_activity_rename_act">Rename_act</string>
+    <string name="title_activity_data_view">DataView</string>
 
 </resources>

@@ -1,6 +1,6 @@
 package com.example1.wocao;
 
-import java.util.Date;
+import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 
@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,63 +15,69 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class Display extends Activity {
     private TextView c_display=null;
-    private TextView stats1=null;
-    private TextView stats2=null;
-    private TextView stats3=null;
+
     private TextView c_name = null;
     private Button button = null;
     counter theobj;
     databasehelp mydbhelper=null;
-    
+    ArrayList<DateTime> time_list= new ArrayList<DateTime>();
+    ArrayList<Integer> int_time = new ArrayList<Integer>();
+    ArrayList<String> hourlist;
+    ArrayList<String> weeklist;
+    ArrayList<String> monthlist;
     SQLiteDatabase dis_db=null;
     DateTime counter_date = null;
     Context cou_context= null;
-    
+    ListView data_list ;
+    ArrayAdapter<String> array_list_Adapter ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		
 		button = (Button) findViewById(R.id.button1);
 		Intent intent = getIntent();
 		theobj = (counter) intent.getSerializableExtra("object");
 		mydbhelper= new databasehelp(Display.this);
-		
+		data_list= (ListView) findViewById(R.id.scrollView1);
 		dis_db = mydbhelper.getReadableDatabase();
+		hourlist= new ArrayList<String>();
+		
+		weeklist= new ArrayList<String>();
+		monthlist= new ArrayList<String>();
+		array_list_Adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,hourlist);
 		
 		c_name = (TextView) findViewById(R.id.thename1);
-		stats1 = (TextView) findViewById(R.id.textView1);
-		stats2 = (TextView) findViewById(R.id.textView2);
-		stats3 = (TextView) findViewById(R.id.textView3);
+
 		//start new date
 		counter_date= new DateTime();
 	    cou_context = getApplicationContext();
 	    // add new date
 		
 		
-		
-		
-		stats1.setText("asdklf");
-		stats2.setText(counter_date.getMinuteOfDay()+"");
-		stats3.setText("123");
+
 		c_display= (TextView) findViewById(R.id.dis_id);
 		c_display.setText(theobj.counterid+"");
 		c_name.setText(theobj.name1);
 		String [] col = {"ID","NAME","COUNT"};
 		Cursor c = dis_db.query("table1",col,"ID = "+theobj.counterid,null,null,null,null);
+		
 		c.moveToFirst();
 		int wocao = c.getInt(0);
 		String wocao2 = c.getString(1);
 		int wocao3 = c.getInt(2);
 		c_display.setText(wocao+wocao2+wocao3);
 		theobj.count=wocao3;
+		data_list.setAdapter(array_list_Adapter);
 	}
 
 	/**
@@ -102,12 +107,46 @@ public class Display extends Activity {
 	// to display stats
 	public void stats(View view)
 	{   String [] date1={"COUNT","DATE2"}; 
-		Cursor the_cursor = dis_db.query("tabl1",date1 ,"ID = "+theobj.counterid,null, null, null, null);
+		Cursor the_cursor = dis_db.query("table1",date1 ,"ID = "+theobj.counterid,null, null, null, null);
 		the_cursor.moveToFirst();
-		while(the_cursor.moveToNext())
-		{
+		int hour=1;
+		int week =1;
+		int month = 1;
+		String pre="                       ";
+		while (the_cursor.moveToNext())
+		{   String  cmp = the_cursor.getString(1);
+			if(cmp.contains(pre.substring(0, 7)))
+			{
+				month++;
+				for(String jiba : hourlist)
+				{
+					if (jiba.substring(0,7)==cmp.substring(0, 7))
+					{
+						break;
+					}
+					else
+					{
+						hourlist.add(pre.substring(0,7)+" ---> "+month+"");		
+					}
+					
+				}
+				hourlist.add(pre.substring(0,7)+" ---> "+month+"");
+			}
+			if(cmp.contains(pre.subSequence(0, 13)))
+			{
+				hour++;
+				hourlist.add(pre.substring(0,13)+" ---> "+hour+"");
+			}
+			if(cmp.contains(pre.subSequence(0, 10)))
+			{
+				week++;
+				hourlist.add(pre.substring(0,10)+" ---> "+week+"");
+			}
 			
+			pre=the_cursor.getString(1);
 		}
+		array_list_Adapter.notifyDataSetChanged();
+	  
 	} 
 	// when add button is clicked it will add one to the counter and update the data base
     public void add(View view)
@@ -125,7 +164,7 @@ public class Display extends Activity {
      	Cursor c  = dis_db.query("table1",wocao, "ID = "+theobj.counterid, null, null, null, null);
     	c.moveToFirst();
     	c_display.setText(c.getInt(0)+c.getString(1)+c.getString(2)+"wocao");
-    	stats3.setText(c.getString(3));
+    
     	
     	//DateTime time = new DateTime();
     	//stats3.setText(c.getString(3).toString());
