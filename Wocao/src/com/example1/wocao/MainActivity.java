@@ -6,7 +6,10 @@ import java.util.Collections;
 import org.joda.time.DateTime;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -42,6 +45,7 @@ public class MainActivity extends Activity{
         
         setContentView(R.layout.activity_main);
         //create new list
+        showDialog("Welcome","Long Press to delete counters\n\nClick new counter to add\n\nClick sort to sort in order",MainActivity.this);
         alist_counter = new ArrayList<counter>();
         counter counter1= new counter("Example Counter",the_counter_id);
         thetime = new DateTime();
@@ -194,7 +198,30 @@ public class MainActivity extends Activity{
 
 	}
 
-    
+    // to make  a dialog code is from stack overflow
+	/*
+	 * http://stackoverflow.com/questions/18891569/how-to-make-a-dialog-box-in-android-returning-a-value-boolean
+	 */
+	public Dialog showDialog(String title, String msg, final Activity activity) {
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(activity)
+                .create();
+        alertDialog.setTitle(title);
+        alertDialog.setMessage(msg);
+        /*alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+
+                    activity.finish();
+
+            }
+        });*/
+        alertDialog.show();
+
+        return alertDialog;
+
+    }
+	
 	/*@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub

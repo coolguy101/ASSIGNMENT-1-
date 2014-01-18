@@ -76,7 +76,7 @@ public class Display extends Activity {
 		int wocao = c.getInt(0);
 		String wocao2 = c.getString(1);
 		int wocao3 = c.getInt(2);
-		c_display.setText(wocao+wocao2+wocao3);
+		c_display.setText(wocao3+"");
 		theobj.count=wocao3;
 		data_list.setAdapter(array_list_Adapter);
 	}
@@ -111,11 +111,11 @@ public class Display extends Activity {
 		String [] date1={"COUNT","DATE2"}; 
 		Cursor the_cursor = dis_db.query("table1",date1 ,"ID = "+theobj.counterid,null, null, null, null);
 		the_cursor.moveToFirst();
-		int hour=1;
-		int week =1;
-		int month = 1;
+		int hour=0;
+		int week =0;
+		int month =0;
 		String pre="                       ";
-		cursor_list.add(the_cursor.getString(1));
+		//cursor_list.add(the_cursor.getString(1));
 		while (the_cursor.moveToNext())
 		{
 			cursor_list.add(the_cursor.getString(1));
@@ -129,11 +129,11 @@ public class Display extends Activity {
 			for (String cmpstring : cursor_list)
 			{
 				if (wocao.substring(0, 7)==cmpstring.subSequence(0, 7));
-				month++;
+				{month++;}
 			}
 			monthlist.add(wocao.substring(0,7));
 		    array_list_Adapter.add("month of: "+wocao.substring(0,7)+"--->>"+month);
-		    month=1;
+		    month=0;
 			
 		}
         //array_list_Adapter.add(new DateTime().toString());
@@ -148,11 +148,11 @@ public class Display extends Activity {
 			for (String cmpstring : cursor_list)
 			{
 				if (wocao.substring(0, 13)==cmpstring.subSequence(0, 13));
-				hour++;
+				{hour++;}
 			}
 			hourlist.add(wocao.substring(0,13));
 		    array_list_Adapter.add("hour of: "+wocao.substring(0,13)+"--->>"+hour);
-		    hour=1;
+		    hour=0;
 			
 		}
 		array_list_Adapter.notifyDataSetChanged();
@@ -166,11 +166,11 @@ public class Display extends Activity {
 			for (String cmpstring : cursor_list)
 			{
 				if (wocao.substring(0, 10)==cmpstring.subSequence(0, 10));
-				week++;
+				{week++;}
 			}
 			weeklist.add(wocao.substring(0,10));
 		    array_list_Adapter.add("week of: "+wocao.substring(0,10)+"--->>"+week);
-		    week=1;
+		    week=0;
 			
 		}
 		array_list_Adapter.notifyDataSetChanged();
@@ -184,15 +184,16 @@ public class Display extends Activity {
     	//c_display.setText(theobj.count+"");
     	ContentValues values = new ContentValues();
     	values.put("COUNT", theobj.count);
-    	values.put("DATE2",counter_date+"");
+    	values.put("DATE2",new DateTime().toString());
     	values.put("ID", theobj.counterid);
     	values.put("NAME", theobj.name1);
     	dis_db.update("table1",values, "ID ="+theobj.counterid, null);
+    	values.put("COUNT",1);
     	dis_db.insert("table1",null, values);
     	String [] wocao = {"ID","NAME","COUNT","DATE2"};
      	Cursor c  = dis_db.query("table1",wocao, "ID = "+theobj.counterid, null, null, null, null);
     	c.moveToFirst();
-    	c_display.setText(c.getInt(0)+c.getString(1)+c.getString(2)+"wocao");
+    	c_display.setText(c.getString(2));
     
     	
     	//DateTime time = new DateTime();
