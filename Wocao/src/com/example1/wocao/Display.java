@@ -110,15 +110,17 @@ public class Display extends Activity {
 	{   
 		String [] date1={"COUNT","DATE2"}; 
 		Cursor the_cursor = dis_db.query("table1",date1 ,"ID = "+theobj.counterid,null, null, null, null);
+		
 		the_cursor.moveToFirst();
+		
 		int hour=0;
 		int week =0;
 		int month =0;
-		String pre="                       ";
-		//cursor_list.add(the_cursor.getString(1));
+		
 		while (the_cursor.moveToNext())
 		{
 			cursor_list.add(the_cursor.getString(1));
+			System.out.println("string is "+the_cursor.getString(1));
 		}
 		for (String wocao : cursor_list)
 		{
@@ -131,18 +133,20 @@ public class Display extends Activity {
 				if (wocao.substring(0, 7)==cmpstring.subSequence(0, 7));
 				{month++;}
 			}
+			System.out.println(wocao.substring(0,7));
 			monthlist.add(wocao.substring(0,7));
+			
 		    array_list_Adapter.add("month of: "+wocao.substring(0,7)+"--->>"+month);
 		    month=0;
 			
 		}
         //array_list_Adapter.add(new DateTime().toString());
-		array_list_Adapter.notifyDataSetChanged();
+		//array_list_Adapter.notifyDataSetChanged();
 		// hour data
 		for (String wocao : cursor_list)
-		{
+		{   
 			if (  hourlist.contains(wocao.substring(0, 13)) )
-			{
+			{   
 				continue;
 			}
 			for (String cmpstring : cursor_list)
@@ -150,17 +154,17 @@ public class Display extends Activity {
 				if (wocao.substring(0, 13)==cmpstring.subSequence(0, 13));
 				{hour++;}
 			}
-			hourlist.add(wocao.substring(0,13));
+			hourlist.add(wocao.substring(0, 13));
 		    array_list_Adapter.add("hour of: "+wocao.substring(0,13)+"--->>"+hour);
 		    hour=0;
 			
 		}
-		array_list_Adapter.notifyDataSetChanged();
+		//array_list_Adapter.notifyDataSetChanged();
 		// week data
 		for (String wocao : cursor_list)
 		{
 			if (  weeklist.contains(wocao.substring(0, 10)) )
-			{
+			{   
 				continue;
 			}
 			for (String cmpstring : cursor_list)
@@ -181,10 +185,10 @@ public class Display extends Activity {
     public void add(View view)
     {   
     	theobj.count++;
-    	//c_display.setText(theobj.count+"");
     	ContentValues values = new ContentValues();
     	values.put("COUNT", theobj.count);
     	values.put("DATE2",new DateTime().toString());
+    	System.out.println(new DateTime().toString()+"gan");
     	values.put("ID", theobj.counterid);
     	values.put("NAME", theobj.name1);
     	dis_db.update("table1",values, "ID ="+theobj.counterid, null);

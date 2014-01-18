@@ -1,7 +1,0 @@
-package com.example1.wocao;
-
-import java.util.Comparator;
-
-public class countercmp implements Comparator<counter>{
-
-}
