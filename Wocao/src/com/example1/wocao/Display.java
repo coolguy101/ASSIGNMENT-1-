@@ -32,6 +32,7 @@ public class Display extends Activity {
     ArrayList<String> hourlist;
     ArrayList<String> weeklist;
     ArrayList<String> monthlist;
+    ArrayList<String> cursor_list;
     SQLiteDatabase dis_db=null;
     DateTime counter_date = null;
     Context cou_context= null;
@@ -51,7 +52,7 @@ public class Display extends Activity {
 		data_list= (ListView) findViewById(R.id.scrollView1);
 		dis_db = mydbhelper.getReadableDatabase();
 		hourlist= new ArrayList<String>();
-		
+		cursor_list = new ArrayList<String>();
 		weeklist= new ArrayList<String>();
 		monthlist= new ArrayList<String>();
 		array_list_Adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,hourlist);
@@ -106,48 +107,76 @@ public class Display extends Activity {
 	}
 	// to display stats
 	public void stats(View view)
-	{   String [] date1={"COUNT","DATE2"}; 
+	{   
+		String [] date1={"COUNT","DATE2"}; 
 		Cursor the_cursor = dis_db.query("table1",date1 ,"ID = "+theobj.counterid,null, null, null, null);
 		the_cursor.moveToFirst();
 		int hour=1;
 		int week =1;
 		int month = 1;
 		String pre="                       ";
+		cursor_list.add(the_cursor.getString(1));
 		while (the_cursor.moveToNext())
-		{   String  cmp = the_cursor.getString(1);
-			if(cmp.contains(pre.substring(0, 7)))
+		{
+			cursor_list.add(the_cursor.getString(1));
+		}
+		for (String wocao : cursor_list)
+		{
+			if (  monthlist.contains(wocao.substring(0, 7)) )
 			{
+				continue;
+			}
+			for (String cmpstring : cursor_list)
+			{
+				if (wocao.substring(0, 7)==cmpstring.subSequence(0, 7));
 				month++;
-				for(String jiba : hourlist)
-				{
-					if (jiba.substring(0,7)==cmp.substring(0, 7))
-					{
-						break;
-					}
-					else
-					{
-						hourlist.add(pre.substring(0,7)+" ---> "+month+"");		
-					}
-					
-				}
-				hourlist.add(pre.substring(0,7)+" ---> "+month+"");
 			}
-			if(cmp.contains(pre.subSequence(0, 13)))
-			{
-				hour++;
-				hourlist.add(pre.substring(0,13)+" ---> "+hour+"");
-			}
-			if(cmp.contains(pre.subSequence(0, 10)))
-			{
-				week++;
-				hourlist.add(pre.substring(0,10)+" ---> "+week+"");
-			}
+			monthlist.add(wocao.substring(0,7));
+		    array_list_Adapter.add("month of: "+wocao.substring(0,7)+"--->>"+month);
+		    month=1;
 			
-			pre=the_cursor.getString(1);
+		}
+        //array_list_Adapter.add(new DateTime().toString());
+		array_list_Adapter.notifyDataSetChanged();
+		// hour data
+		for (String wocao : cursor_list)
+		{
+			if (  hourlist.contains(wocao.substring(0, 13)) )
+			{
+				continue;
+			}
+			for (String cmpstring : cursor_list)
+			{
+				if (wocao.substring(0, 13)==cmpstring.subSequence(0, 13));
+				hour++;
+			}
+			hourlist.add(wocao.substring(0,13));
+		    array_list_Adapter.add("hour of: "+wocao.substring(0,13)+"--->>"+hour);
+		    hour=1;
+			
 		}
 		array_list_Adapter.notifyDataSetChanged();
-	  
-	} 
+		// week data
+		for (String wocao : cursor_list)
+		{
+			if (  weeklist.contains(wocao.substring(0, 10)) )
+			{
+				continue;
+			}
+			for (String cmpstring : cursor_list)
+			{
+				if (wocao.substring(0, 10)==cmpstring.subSequence(0, 10));
+				week++;
+			}
+			weeklist.add(wocao.substring(0,10));
+		    array_list_Adapter.add("week of: "+wocao.substring(0,10)+"--->>"+week);
+		    week=1;
+			
+		}
+		array_list_Adapter.notifyDataSetChanged();
+		
+		
+    } 
 	// when add button is clicked it will add one to the counter and update the data base
     public void add(View view)
     {   
