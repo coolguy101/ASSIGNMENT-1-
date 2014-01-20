@@ -110,64 +110,71 @@ public class Display extends Activity {
 	// to display stats
 	public void stats(View view)
 	{   System.out.println("stats clicked !!");
+	    
+	    
+	    
 		String [] date1={"COUNT","DATE2"}; 
 		Cursor the_cursor = dis_db.query("table1",date1 ,"ID = "+theobj.counterid,null, null, null, null);
 		the_cursor.moveToFirst();
 		int hour=0;
 		int week =0;
 		int month =0;
+		
 		while (the_cursor.moveToNext())
 		{
 			cursor_list.add(the_cursor.getString(1));
 			System.out.println("string is "+the_cursor.getString(1));
 		}
 		for (String wocao : cursor_list)
-		{
-			if (  monthlist.contains(wocao.substring(0, 7)) )
+		{   int flag = 9;
+			/*if (  monthlist.contains(wocao.substring(0, 7)) )
+			{   System.out.println("month run");
+				continue;
+			}*/
+			for(String jiba : monthlist)
+			{     
+				if (jiba.contentEquals(wocao.substring(0, 7)))
+				{  
+					flag = 8;
+					break;
+				}
+			}
+			if (flag==8)
 			{
 				continue;
 			}
+			
 			for (String cmpstring : cursor_list)
 			{
-				if (wocao.substring(0, 7)==cmpstring.subSequence(0, 7));
+				if (cmpstring.substring(0, 7).equalsIgnoreCase(wocao.substring(0, 7)))
 				{month++;}
 			}
-			System.out.println(wocao.substring(0,7));
+			
 			monthlist.add(wocao.substring(0,7));
 			
-		    array_list_Adapter.add("month of: "+wocao.substring(0,7)+"--->>"+month);
+			array_list_Adapter.add("month of: "+wocao.substring(0,7)+"--->>"+month);
 		    month=0;
 			
 		}
-       
-		// hour data
-		for (String wocao : cursor_list)
-		{   
-			if (  hourlist.contains(wocao.substring(0, 13)) )
-			{   
-				continue;
-			}
-			for (String cmpstring : cursor_list)
-			{
-				if (wocao.substring(0, 13)==cmpstring.subSequence(0, 13));
-				{hour++;}
-			}
-			hourlist.add(wocao.substring(0, 13));
-		    array_list_Adapter.add("hour of: "+wocao.substring(0,13)+"--->>"+hour);
-		    hour=0;
-			
-		}
-		
-		// week data
+        //week data
 		for (String wocao : cursor_list)
 		{
-			if (  weeklist.contains(wocao.substring(0, 10)) )
-			{   
+			int flag = 9 ;
+			for (String jiba : weeklist)
+			{
+				if (jiba.contentEquals(wocao.substring(0, 10)))
+				{   
+					flag = 8;
+					break;
+				}
+			}
+			if (flag ==8)
+			{
 				continue;
 			}
 			for (String cmpstring : cursor_list)
 			{
-				if (wocao.substring(0, 10)==cmpstring.subSequence(0, 10));
+				if (cmpstring.substring(0,10).equalsIgnoreCase(wocao.substring(0, 10)))
 				{week++;}
 			}
 			weeklist.add(wocao.substring(0,10));
@@ -175,23 +182,58 @@ public class Display extends Activity {
 		    week=0;
 			
 		}
+		// hour data
+		for (String wocao : cursor_list)
+		{   
+			int flag = 9 ;
+			for (String jiba : hourlist)
+			{
+				if (jiba.contentEquals(wocao.substring(0, 13)))
+				{  
+					flag = 8;
+					break;
+				}
+			}
+			if (flag ==8)
+			{
+				continue;
+			}
+			for (String cmpstring : cursor_list)
+			{
+				if (cmpstring.substring(0, 13).equalsIgnoreCase(wocao.substring(0, 13)))
+				{
+					hour++;
+				}
+			}
+			hourlist.add(wocao.substring(0, 13));
+		    array_list_Adapter.add("hour of: "+wocao.substring(0,13)+"--->>"+hour);
+		    hour=0;
+			
+		}
+	
+		for (String over : hourlist)
+		{
+    		System.out.println(over+"over");
+    		
+		}
+		System.out.println(monthlist.size()+"size");
+		System.out.println(weeklist.size()+"sizeweek");
+		System.out.println(hourlist.size()+"sizehour");
 		suibian.notifyDataSetChanged();
-		
-		
-		
-    } 
+	    } 
 	// when add button is clicked it will add one to the counter and update the data base
     public void add(View view)
     {   
     	theobj.count++;
     	ContentValues values = new ContentValues();
     	values.put("COUNT", theobj.count);
-    	values.put("DATE2",new DateTime().toString());
+    	//values.put("DATE2",new DateTime().toString());
     	System.out.println(new DateTime().toString()+"gan");
     	values.put("ID", theobj.counterid);
     	values.put("NAME", theobj.name1);
     	dis_db.update("table1",values, "ID ="+theobj.counterid, null);
-    	values.put("COUNT",1);
+    	//values.put("COUNT",1);
+    	values.put("DATE2", new DateTime().toString());
     	dis_db.insert("table1",null, values);
     	String [] wocao = {"ID","NAME","COUNT","DATE2"};
      	Cursor c  = dis_db.query("table1",wocao, "ID = "+theobj.counterid, null, null, null, null);
