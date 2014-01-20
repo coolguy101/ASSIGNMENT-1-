@@ -25,6 +25,7 @@ public class Display extends Activity {
 
     private TextView c_name = null;
     private Button button = null;
+    ArrayAdapter<String> suibian;
     counter theobj;
     databasehelp mydbhelper=null;
     ArrayList<DateTime> time_list= new ArrayList<DateTime>();
@@ -37,7 +38,7 @@ public class Display extends Activity {
     DateTime counter_date = null;
     Context cou_context= null;
     ListView data_list ;
-    ArrayAdapter<String> array_list_Adapter ;
+    ArrayList<String> array_list_Adapter ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,7 +56,8 @@ public class Display extends Activity {
 		cursor_list = new ArrayList<String>();
 		weeklist= new ArrayList<String>();
 		monthlist= new ArrayList<String>();
-		array_list_Adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,hourlist);
+		array_list_Adapter = new ArrayList<String>();
+		suibian = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,array_list_Adapter);
 		
 		c_name = (TextView) findViewById(R.id.thename1);
 
@@ -78,7 +80,7 @@ public class Display extends Activity {
 		int wocao3 = c.getInt(2);
 		c_display.setText(wocao3+"");
 		theobj.count=wocao3;
-		data_list.setAdapter(array_list_Adapter);
+		data_list.setAdapter(suibian);
 	}
 
 	/**
@@ -107,16 +109,13 @@ public class Display extends Activity {
 	}
 	// to display stats
 	public void stats(View view)
-	{   
+	{   System.out.println("stats clicked !!");
 		String [] date1={"COUNT","DATE2"}; 
 		Cursor the_cursor = dis_db.query("table1",date1 ,"ID = "+theobj.counterid,null, null, null, null);
-		
 		the_cursor.moveToFirst();
-		
 		int hour=0;
 		int week =0;
 		int month =0;
-		
 		while (the_cursor.moveToNext())
 		{
 			cursor_list.add(the_cursor.getString(1));
@@ -140,8 +139,7 @@ public class Display extends Activity {
 		    month=0;
 			
 		}
-        //array_list_Adapter.add(new DateTime().toString());
-		//array_list_Adapter.notifyDataSetChanged();
+       
 		// hour data
 		for (String wocao : cursor_list)
 		{   
@@ -159,7 +157,7 @@ public class Display extends Activity {
 		    hour=0;
 			
 		}
-		//array_list_Adapter.notifyDataSetChanged();
+		
 		// week data
 		for (String wocao : cursor_list)
 		{
@@ -177,7 +175,8 @@ public class Display extends Activity {
 		    week=0;
 			
 		}
-		array_list_Adapter.notifyDataSetChanged();
+		suibian.notifyDataSetChanged();
+		
 		
 		
     } 
