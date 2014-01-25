@@ -1,0 +1,7 @@
+package com.example1.project;
+
+public class Thread {
+        String comment = null;
+        
+        
+}
