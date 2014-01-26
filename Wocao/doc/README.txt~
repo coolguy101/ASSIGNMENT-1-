@@ -1,0 +1,20 @@
+Name: yazhou jiang
+ID: 1244524
+This is Assignment 1 of CMPUT 301
+Adnroid min_supported API 15,targetSdkVersion is 18
+
+/*========================*/
+
+if the source code doesn't run in eclipse, then use the apk file in the bin folder,
+copy the apk file to your phone, then install it using a installer  and it will run on your pone
+
+/*========================*/
+
+This is the counter to add counts.
+for example: you can counter how many car in the parking lot by click "new counter" and clicker the counter just added, then it will take you to the counter adding page. Inside counting page you can click "add" to add counter,
+click "reset" to reset
+click "rename" to give it a new name
+click "stats" to show counter history for counter, it will pop up a list view for that.
+
+the delete a counter just long press counter in the mainpage, then it will be deleted.
+
