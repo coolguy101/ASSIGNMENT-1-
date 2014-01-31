@@ -1,7 +1,7 @@
 package com.example1.wocao;
 
 
-
+// this is the code for making custom listview adapter
 import java.util.ArrayList;
 
 import android.content.Context;

@@ -6,14 +6,14 @@ import java.util.Comparator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-
+//this is a counter object, this class is mainly to store attribute of counters
 public class counter extends Activity implements Serializable, Comparator<counter>{
 	
-	int counterid=0;
-	int count = 0;
-	String name1="";
+	int counterid=0;  // the id of counter
+	int count = 0;    //   number of counts
+	String name1="";  //  name of counter
 	Context context  = getBaseContext();
-	
+	// constructor of counters
 	public counter()
 	{
 		

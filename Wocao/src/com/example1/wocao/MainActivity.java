@@ -10,7 +10,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
 See the License for the specific language governing permissions and limitations under the License.
  * */
-
+// this is the starting screen for the app, to display counters and add counter and sort counters
 package com.example1.wocao;
 
 import java.util.ArrayList;
@@ -41,15 +41,12 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity{
 	
-	DateTime thetime = null;
-    public int the_counter_id = 0;
-    ListView listview = null;
-    TextView textv=null;
-    //String [] counters;
-    //public counter[] counter_obj;
-    //public ArrayAdapter<counter> newadp ;
-    public cutadapter cut_adapter;
-    public ArrayList<counter> alist_counter ;
+	DateTime thetime = null;  // using joda time to make the time
+    public int the_counter_id = 0; 
+    ListView listview = null;  // using listview to display counter
+    TextView textv=null; // using TextView
+    public cutadapter cut_adapter; // the adapter for listview
+    public ArrayList<counter> alist_counter ; // array to store counters
     public databasehelp mydbhelper2 ;
     public SQLiteDatabase thedb;
      @Override
@@ -61,17 +58,17 @@ public class MainActivity extends Activity{
         showDialog("Welcome","Long Press to delete counters\n\nClick new counter to add counters\n\nClick sort to sort in order",MainActivity.this);
         alist_counter = new ArrayList<counter>();
         counter counter1= new counter("Example Counter",the_counter_id);
-        thetime = new DateTime();
+        thetime = new DateTime(); // to make a new time
         // create new database
         mydbhelper2 =  new databasehelp(MainActivity.this);
         thedb = mydbhelper2.getWritableDatabase();
         //add a value to database example counter
         ContentValues values = new ContentValues(); 
-        //alist_counter.add(counter1);
+        
         values.put("ID", 0);
         values.put("NAME", counter1.name1);
         values.put("COUNT", counter1.count);
-        //thedb.delete("table1",null, null);
+        
         int flag=5;
         Cursor c1 = thedb.query("table1",null,null, null, null, null,null);
         ArrayList<Integer> the_id_list = new ArrayList<Integer>();
@@ -100,8 +97,8 @@ public class MainActivity extends Activity{
         	    	the_id_list.add(c1.getInt(0));
         	    	alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
         	    }
-        		//alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
-        		//theid=c1.getInt(0);
+        
+        
         		if (c1.getInt(0)>the_counter_id)
         		{
         			the_counter_id=c1.getInt(0);
@@ -109,29 +106,7 @@ public class MainActivity extends Activity{
         	}
         	the_counter_id++;
         }
-       /* while (c1.moveToFirst())
-        {   
-        	if (c1.getString(c1.getColumnIndex("NAME"))==null)
-        	{  Toast.makeText(this,"the DB is not empty888",Toast.LENGTH_LONG).show();
-        	   break;
-        	   
-            }*/
-        	//Toast.makeText(this,"the DB is not empty",Toast.LENGTH_LONG).show();
-        	/*c1.moveToFirst();
-        	//alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
-        	
-        	while(c1.moveToNext())
-        	{
-        		//alist_counter.add(new counter(c1.getString(1),c1.getInt(0),c1.getInt(2)));
-        		the_counter_id= c1.getInt(0)+1;
-        		Toast.makeText(this,"asdfasdf",Toast.LENGTH_LONG).show();
-        	}*/
-        
-        
-        //thedb.insert("table1",null, values);
-        //the_counter_id++;
-//        counter cmp1 = new counter ("cmp1",99);
-  //      counter cmp2 = new counter ("cmp2",98);
+       
         Toast.makeText(this, "LongPress to delete Counter",Toast.LENGTH_LONG).show();
         listview = (ListView)findViewById(R.id.list1);
         cut_adapter= new cutadapter(MainActivity.this,R.id.list1,alist_counter);
@@ -188,7 +163,7 @@ public class MainActivity extends Activity{
         the_counter_id++;
     	return new_count;
     }
-    
+    // to select the muen item such as add new counter and sort
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
@@ -221,33 +196,14 @@ public class MainActivity extends Activity{
                 .create();
         alertDialog.setTitle(title);
         alertDialog.setMessage(msg);
-        /*alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                alertDialog.dismiss();
-
-                    activity.finish();
-
-            }
-        });*/
+        
         alertDialog.show();
 
         return alertDialog;
 
     }
 	
-	/*@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		System.out.print("wocao");
-		super.onStart();
-		Toast.makeText(MainActivity.this, "this is print", Toast.LENGTH_LONG).show();
-		Intent intent= getIntent();
-		counter c1 = (counter) intent.getSerializableExtra("getdata");
-		alist_counter.remove(c1.counterid);
-		alist_counter.add(c1.counterid, c1);
-		cut_adapter.notifyDataSetChanged();
-		
-	}*/
+	// to get data from the result counter activity
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub

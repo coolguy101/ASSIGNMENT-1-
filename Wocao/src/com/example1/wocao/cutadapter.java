@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+// custom listview adapter for making a listview adapter
 public class cutadapter extends ArrayAdapter<counter>{
 	private ArrayList<counter> entries;
     private Activity activity;
@@ -19,8 +20,8 @@ public class cutadapter extends ArrayAdapter<counter>{
     }
     
     public static class ViewHolder{
-        public TextView item1;
-        public TextView item2;
+        public TextView item1; //make a Testview
+        public TextView item2; //make a Testview
     }
 
 	@Override

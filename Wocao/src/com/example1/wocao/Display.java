@@ -19,7 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
+// the activity to display counter and add counter, reset, rename , stats view
 public class Display extends Activity {
     private TextView c_display=null;
 
@@ -30,15 +30,15 @@ public class Display extends Activity {
     databasehelp mydbhelper=null;
     ArrayList<DateTime> time_list= new ArrayList<DateTime>();
     ArrayList<Integer> int_time = new ArrayList<Integer>();
-    ArrayList<String> hourlist;
-    ArrayList<String> weeklist;
-    ArrayList<String> monthlist;
+    ArrayList<String> hourlist; // to store hours of counts
+    ArrayList<String> weeklist; // to store weeks of counts
+    ArrayList<String> monthlist; // to store month of counts
     ArrayList<String> cursor_list;
     SQLiteDatabase dis_db=null;
     DateTime counter_date = null;
     Context cou_context= null;
     ListView data_list ;
-    ArrayList<String> array_list_Adapter ;
+    ArrayList<String> array_list_Adapter ; // make adapter for the listview
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -127,10 +127,7 @@ public class Display extends Activity {
 		}
 		for (String wocao : cursor_list)
 		{   int flag = 9;
-			/*if (  monthlist.contains(wocao.substring(0, 7)) )
-			{   System.out.println("month run");
-				continue;
-			}*/
+			
 			for(String jiba : monthlist)
 			{     
 				if (jiba.contentEquals(wocao.substring(0, 7)))
